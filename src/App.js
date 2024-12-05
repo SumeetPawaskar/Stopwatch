@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import './App.css'; // You can customize your global CSS here
 
 function App() {
   const [seconds, setSeconds] = useState(0); // Tracks seconds
