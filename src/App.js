@@ -2,44 +2,45 @@ import React, { useState, useEffect } from 'react';
 
 
 function App() {
-  const [seconds, setSeconds] = useState(0); 
-  const [isRunning, setIsRunning] = useState(false); 
-  const [intervalId, setIntervalId] = useState(null);
+  const [seconds, setSeconds] = useState(0); // Tracks seconds
+  const [isRunning, setIsRunning] = useState(false); // Indicates whether the timer is running
+  const [intervalId, setIntervalId] = useState(null); // Stores the interval ID for clearing
 
-  
+  // Start/Stop the stopwatch
   const toggleTimer = () => {
     if (isRunning) {
-      clearInterval(intervalId); 
+      clearInterval(intervalId); // Stop the timer
       setIsRunning(false);
     } else {
       const newIntervalId = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds + 1); 
+        setSeconds((prevSeconds) => prevSeconds + 1); // Increment time every second
       }, 1000);
       setIntervalId(newIntervalId);
       setIsRunning(true);
     }
   };
 
-  
+  // Reset the stopwatch
   const resetTimer = () => {
-    clearInterval(intervalId); 
+    clearInterval(intervalId); // Clear the interval if the timer is running
     setIsRunning(false);
-    setSeconds(0); 
+    setSeconds(0); // Reset time to 0
   };
 
- 
+  // Convert seconds to MM:SS format
   const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60); 
-    const remainingSeconds = seconds % 60; 
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`; // Format as MM:SS
+    const minutes = Math.floor(seconds / 60); // Get minutes part
+    const remainingSeconds = seconds % 60; // Get remaining seconds part
+    return `Time: ${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`; // Format as Time: MM:SS
   };
 
-  
+  // Cleanup when the component unmounts (optional)
   useEffect(() => {
     return () => {
-      clearInterval(intervalId); 
+      clearInterval(intervalId); // Clean up interval on unmount
     };
-  }, [intervalId]); 
+  }, [intervalId]); // Re-run cleanup if intervalId changes
+
   return (
     <div className="App">
       <div className="stopwatch-container">
